@@ -13,8 +13,5 @@ let package = Package(
         .target(
             name: "AFProfileImagePicker",
             dependencies: []),
-        .testTarget(
-            name: "AFProfileImagePickerTests",
-            dependencies: ["AFProfileImagePicker"]),
     ]
 )
