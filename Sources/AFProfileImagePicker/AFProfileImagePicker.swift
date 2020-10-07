@@ -10,6 +10,7 @@ import AVFoundation
 import UIKit
 import ImageIO
 import MobileCoreServices
+import MMSCameraViewController
 
 public protocol AFProfileImagePickerDelegate: AnyObject {
     /// The user canceled out of the image selection operation.
@@ -86,6 +87,7 @@ public class AFProfileImagePicker: UIViewController {
     private var stillImageOutput: AVCaptureStillImageOutput?
     /// This class proxy's for the UIImagePickerController.
     private var imagePicker = UIImagePickerController()
+    private var camera = MMSCameraViewController()
 
     // MARK: - Life Cycle
 
@@ -103,6 +105,31 @@ public class AFProfileImagePicker: UIViewController {
 
     public override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
+    }
+
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        if isPresentingCamera {
+            super.dismiss(animated: false, completion: completion)
+
+            if didChooseImage {
+                camera.dismiss(animated: false) {
+                    self.isPresentingCamera = false
+                    self.didChooseImage = false
+                }
+            }
+        } else if isDisplayFromPicker {
+            super.dismiss(animated: false) {
+                self.didChooseImage = false
+            }
+
+            imagePicker.dismiss(animated: false, completion: nil)
+            isDisplayFromPicker = false
+        } else {
+            super.dismiss(animated: flag) {
+                completion?()
+                self.didChooseImage = false
+            }
+        }
     }
 
     // MARK: - Public Methods
@@ -143,11 +170,11 @@ public class AFProfileImagePicker: UIViewController {
     /// - Parameter vc: The view controller to present the camera from.
     public func select(fromCamera vc: UIViewController) {
         isPresentingCamera = true
-        // camera = [[MMSCameraViewController alloc] initWithNibName:nil bundle:nil];
-        // camera.delegate = self
+        camera = MMSCameraViewController(nibName: nil, bundle: nil)
+        camera.delegate = self
         presentingVC = vc
 
-        // presentingVC?.present(camera, animated: true, completion: nil)
+        presentingVC?.present(camera, animated: true, completion: nil)
     }
 
     // MARK: - Selector Methods
@@ -205,7 +232,7 @@ public class AFProfileImagePicker: UIViewController {
         imageToEdit = image
         modalPresentationStyle = .fullScreen
 
-        // [camera presentViewController:self animated:YES completion:nil];
+        camera.present(self, animated: true, completion: nil)
     }
 }
 
@@ -391,12 +418,6 @@ extension AFProfileImagePicker {
 
         return button
     }
-
-    // TODO:
-    //    - (void)cameraDidCaptureStillImage:(UIImage *)image camera:(MMSCameraViewController *)cameraController {
-    //
-    //    [self editImage:image];
-    //    }
 }
 
 // MARK: - Helper Methods
@@ -571,5 +592,12 @@ extension AFProfileImagePicker: UIImagePickerControllerDelegate, UINavigationCon
     /// - Parameter picker: The image picker controller.
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         delegate?.afImagePickerControllerDidCancel(self)
+    }
+}
+
+// MARK: - MMSCameraViewDelegate
+extension AFProfileImagePicker: MMSCameraViewDelegate {
+    public func cameraDidCaptureStillImage(_ image: UIImage, camera cameraController: MMSCameraViewController) {
+        editImage(image)
     }
 }
