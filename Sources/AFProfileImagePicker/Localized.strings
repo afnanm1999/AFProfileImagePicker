@@ -1,0 +1,13 @@
+//
+//  AFProfileImagePicker.swift
+//  AFProfileImagePicker
+//
+//  Created by Afnan Mirza on 10/6/20.
+//  Copyright © 2020 Afnan Mirza. All rights reserved.
+//
+
+"Edit.title" = "Move and Scale";
+"Button.choose.photoFromCamera" = "Use Photo";
+"Button.choose.photoFromPicker" = "Choose";
+"Button.cancel.photoFromCamera" = "Retake";
+"Button.cancel.photoFromPicker" = "Cancel";
