@@ -210,7 +210,7 @@ public class AFProfileImagePicker: UIViewController {
                                                                 .mediaType: [kUTTypeImage],
                                                                 .cropRect: NSValue(cgRect: imageCropRect)]
 
-            delegate?.afImagePickerController(self, didFinishPickingMediaWithInfo: info)
+            delegate?.profileImagePickerController(self, didFinishPickingMediaWithInfo: info)
         }
     }
 
@@ -223,7 +223,7 @@ public class AFProfileImagePicker: UIViewController {
         } else if isPresentingCamera {
             dismiss(animated: false, completion: nil)
         } else {
-            delegate?.afImagePickerControllerDidCancel(self)
+            delegate?.profileImagePickerControllerDidCancel(self)
         }
     }
 
@@ -590,7 +590,7 @@ extension AFProfileImagePicker: UIImagePickerControllerDelegate, UINavigationCon
     ///
     /// - Parameter picker: The image picker controller.
     public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        delegate?.afImagePickerControllerDidCancel(self)
+        delegate?.profileImagePickerControllerDidCancel(self)
     }
 }
 
