@@ -17,7 +17,7 @@ public protocol AFProfileImagePickerDelegate: AnyObject {
     ///
     /// - Parameter picker: Reference to the Profile Picker.
     ///
-    func afImagePickerControllerDidCancel(_ picker: AFProfileImagePicker)
+    func profileImagePickerControllerDidCancel(_ picker: AFProfileImagePicker)
 
     /// The user completed the operation of either editing, selecting from photo library, or capturing from the camera.  The dictionary uses the editing information keys used in UIImagePickerController.
     ///
@@ -25,7 +25,7 @@ public protocol AFProfileImagePickerDelegate: AnyObject {
     ///     - picker: Reference to profile picker that completed selection.
     ///     - info: A dictionary containing the original image and the edited image, if an image was picked; The dictionary also contains any relevant editing information. .
     ///
-    func afImagePickerController(_ picker: AFProfileImagePicker, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
+    func profileImagePickerController(_ picker: AFProfileImagePicker, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
 }
 
 public class AFProfileImagePicker: UIViewController {
@@ -75,7 +75,6 @@ public class AFProfileImagePicker: UIViewController {
     private var cancelButton = UIButton()
     /// Selects the image
     private var chooseButton = UIButton()
-
     /// Image passed to the edit screen.
     private var imageToEdit: UIImage?
     /// Rectangular area identifying the crop region.
@@ -159,7 +158,7 @@ public class AFProfileImagePicker: UIViewController {
         imagePicker.allowsEditing = false
         imagePicker.modalPresentationStyle = .fullScreen
         isDisplayFromPicker = true
-        presentingVC = vc;
+        presentingVC = vc
         imagePicker.delegate = self
 
         presentingVC?.present(imagePicker, animated: true, completion: nil)
@@ -190,7 +189,7 @@ public class AFProfileImagePicker: UIViewController {
 
         // Compute the crop rectangle based on the screens dimensions.
         cropOrigin.x = trunc(scrollView.contentOffset.x + scrollView.contentInset.left)
-        cropOrigin.y = trunc(scrollView.contentOffset.y + scrollView.contentInset.top);
+        cropOrigin.y = trunc(scrollView.contentOffset.y + scrollView.contentInset.top)
 
         let screenCropRect = CGRect(x: cropOrigin.x, y: cropOrigin.y, width: cropRect.size.width, height: cropRect.size.height)
 
