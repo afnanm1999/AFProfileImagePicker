@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "MMSCameraViewController",
-        "repositoryURL": "git@github.com:afnanm1999/MMSCameraViewController.git",
+        "repositoryURL": "https://github.com/afnanm1999/MMSCameraViewController.git",
         "state": {
           "branch": "SPM-Integration",
           "revision": "391e674b3e2e3bb1cf9d1e4bf685b77d4dba175b",

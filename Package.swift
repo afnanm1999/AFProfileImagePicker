@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "MMSCameraViewController",
-                 url: "git@github.com:afnanm1999/MMSCameraViewController.git",
+                 url: "https://github.com/afnanm1999/MMSCameraViewController.git",
                  .branch("SPM-Integration"))
     ],
     targets: [
